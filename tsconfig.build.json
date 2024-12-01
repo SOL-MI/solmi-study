@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true // 컴파일된 파일을 생성하지 않음. 타입 검사만 수행하고 babel로 빌드
+  },
+  "include": ["src/**/*"],
+  "jsx": "react"
+}

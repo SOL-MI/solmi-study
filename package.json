@@ -1,5 +1,5 @@
 {
-  "name": "sds",
+  "name": "solmi-study",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,16 +8,8 @@
     "type-check": "tsc -p ./tsconfig.build.json",
     "build": "npm run type-check && babel src --out-dir dist --extensions \".js,.ts\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SOL-MI/SDS.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SOL-MI/SDS/issues"
-  },
-  "homepage": "https://github.com/SOL-MI/SDS#readme",
   "devDependencies": {
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
@@ -27,6 +19,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@babel/runtime-corejs3": "^7.26.0",
     "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@webpack-cli/generators": "^3.0.7",
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",

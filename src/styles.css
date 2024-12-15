@@ -1,5 +1,9 @@
+body {
+  background-color: lightblue;
+}
+
 h1 {
-  color: teal;
+  color: darkblue;
 }
 
 .app-container {

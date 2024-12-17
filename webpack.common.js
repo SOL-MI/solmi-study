@@ -55,7 +55,7 @@ module.exports = {
       inject: "body", // 스크립트를 body 태그 끝에 삽입
     }),
     // new Dotenv({
-    //   path: `./.env.${process.env.NODE_ENV}`, // 환경별 .env 파일 경로
+    //   path: `./.env.${process.env.APP_PHASE || "local"}`, // .env 파일 경로 설정
     // }),
   ],
 };

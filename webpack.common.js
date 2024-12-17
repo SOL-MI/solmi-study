@@ -1,7 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
@@ -23,11 +22,6 @@ module.exports = {
                 "@babel/preset-env",
                 "@babel/preset-react", // React 지원
               ],
-              plugins: [
-                // 개발 환경에서만 React Refresh 플러그인 적용
-                process.env.NODE_ENV !== "production" &&
-                  new ReactRefreshWebpackPlugin(),
-              ].filter(Boolean),
             },
           },
         ],
@@ -46,19 +40,10 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.css$/,
-        use: [
-          process.env.NODE_ENV !== "production"
-            ? "style-loader"
-            : MiniCssExtractPlugin.loader,
-          "css-loader", // 로더는 배열의 역순으로 적용됨
-        ],
-      },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", "..."], // import 시 확장자를 생략할 수 있게 해줍니다.
+    extensions: [".tsx", ".ts", ".jsx", ".js"], // import 시 확장자를 생략할 수 있게 해줍니다.
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({

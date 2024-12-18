@@ -1,19 +1,19 @@
 import { Carousel } from "./components/carousel/Carousel";
-import { Item } from "./components/carousel/Item";
+import { CarouselItem } from "./components/carousel/Item";
 import "./styles.css";
 
 function App() {
   const items = [
-    <Item>Item 1</Item>,
-    <Item>Item 2</Item>,
-    <Item>Item 3</Item>,
-    <Item>Item 4</Item>,
-    <Item>Item 5</Item>,
+    <CarouselItem>Item 1</CarouselItem>,
+    <CarouselItem>Item 2</CarouselItem>,
+    <CarouselItem>Item 3</CarouselItem>,
+    <CarouselItem>Item 4</CarouselItem>,
+    <CarouselItem>Item 5</CarouselItem>,
   ];
   return (
     <div className="app-container">
       <h1>Hello, World!</h1>
-      <Carousel items={items} />
+      <Carousel items={items} offset={20} />
     </div>
   );
 }

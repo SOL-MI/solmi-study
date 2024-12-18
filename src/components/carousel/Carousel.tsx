@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { CarouselItem } from "./Item";
+import { CarouselButton } from "./Button";
+import { CarouselProvider } from "./context";
 
 interface CarouselProps {
   items: React.ReactNode[];
+  /**
+   * @description 아이템 간의 간격
+   */
+  offset?: number;
 }
-export const Carousel = ({ items }: CarouselProps) => {
+export const Carousel = ({ items, offset = 10 }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const isTransitioning = useRef(false);
   const carouselRef = useRef(null);
@@ -34,9 +41,14 @@ export const Carousel = ({ items }: CarouselProps) => {
   const getTransform = () => `translateX(-${currentIndex * 100}%)`;
 
   return (
-    <div style={{ overflow: "hidden", width: "100%", position: "relative" }}>
-      <div
-        ref={carouselRef}
+    <CarouselProvider
+    currentIndex={currentIndex}
+    setCurrentIndex={setCurrentIndex}
+    offset={offset}
+    >
+      <div style={{ overflow: "hidden", width: "100%", position: "relative" }}>
+        <div
+          ref={carouselRef}
         style={{
           display: "flex",
           transform: getTransform(),
@@ -51,18 +63,16 @@ export const Carousel = ({ items }: CarouselProps) => {
           </div>
         ))}
       </div>
-      <button
-        onClick={() => moveCarousel(-1)}
-        style={{ position: "absolute", left: 10, top: "50%" }}
-      >
-        {"<"}
-      </button>
-      <button
-        onClick={() => moveCarousel(1)}
-        style={{ position: "absolute", right: 10, top: "50%" }}
-      >
-        {">"}
-      </button>
-    </div>
+        <CarouselButton onClick={() => moveCarousel(-1)} style={{ left: offset + 10 }}>
+          {"<"}
+        </CarouselButton>
+        <CarouselButton onClick={() => moveCarousel(1)} style={{ right: offset + 10 }}>
+          {">"}
+        </CarouselButton>
+      </div>
+    </CarouselProvider>
   );
 };
+
+Carousel.Item = CarouselItem;
+Carousel.Button = CarouselButton;

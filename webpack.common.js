@@ -20,7 +20,7 @@ module.exports = {
             options: {
               presets: [
                 "@babel/preset-env",
-                "@babel/preset-react", // React 지원
+                ["@babel/preset-react", { runtime: "automatic" }],
               ],
             },
           },

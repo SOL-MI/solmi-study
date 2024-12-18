@@ -1,7 +1,6 @@
 import { Carousel } from "./components/carousel/Carousel";
 import { Item } from "./components/carousel/Item";
 import "./styles.css";
-import React from "react";
 
 function App() {
   const items = [

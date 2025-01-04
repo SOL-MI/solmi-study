@@ -12,7 +12,6 @@ function App() {
   ];
   return (
     <div className="app-container">
-      <h1>Hello, World!</h1>
       <Carousel items={items} offset={20} />
     </div>
   );

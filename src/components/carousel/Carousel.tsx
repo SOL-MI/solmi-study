@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { CarouselItem } from "./Item";
 import { CarouselButton } from "./Button";
 import { CarouselProvider } from "./context";
+import { carouselContainerStyle } from "./carousel.css";
 
 interface CarouselProps {
   items: React.ReactNode[];
@@ -42,31 +43,37 @@ export const Carousel = ({ items, offset = 10 }: CarouselProps) => {
 
   return (
     <CarouselProvider
-    currentIndex={currentIndex}
-    setCurrentIndex={setCurrentIndex}
-    offset={offset}
+      currentIndex={currentIndex}
+      setCurrentIndex={setCurrentIndex}
+      offset={offset}
     >
-      <div style={{ overflow: "hidden", width: "100%", position: "relative" }}>
+      <div className={carouselContainerStyle}>
         <div
           ref={carouselRef}
-        style={{
-          display: "flex",
-          transform: getTransform(),
-          transition: isTransitioning.current
-            ? "transform 0.3s ease-in-out"
-            : "none",
-        }}
-      >
-        {extendedItems.map((item, index) => (
-          <div key={index} style={{ flex: "0 0 100%" }}>
-            {item}
-          </div>
-        ))}
-      </div>
-        <CarouselButton onClick={() => moveCarousel(-1)} style={{ left: offset + 10 }}>
+          style={{
+            display: "flex",
+            transform: getTransform(),
+            transition: isTransitioning.current
+              ? "transform 0.3s ease-in-out"
+              : "none",
+          }}
+        >
+          {extendedItems.map((item, index) => (
+            <div key={index} style={{ flex: "0 0 100%" }}>
+              {item}
+            </div>
+          ))}
+        </div>
+        <CarouselButton
+          onClick={() => moveCarousel(-1)}
+          style={{ left: offset + 10 }}
+        >
           {"<"}
         </CarouselButton>
-        <CarouselButton onClick={() => moveCarousel(1)} style={{ right: offset + 10 }}>
+        <CarouselButton
+          onClick={() => moveCarousel(1)}
+          style={{ right: offset + 10 }}
+        >
           {">"}
         </CarouselButton>
       </div>

@@ -3,6 +3,7 @@ import { CarouselItem } from "./Item";
 import { CarouselButton } from "./Button";
 import { CarouselProvider } from "./context";
 import { carouselContainerStyle } from "./carousel.css";
+import { useDebounce } from "../../hooks/useDebounce";
 
 interface CarouselProps {
   items: React.ReactNode[];
@@ -18,19 +19,24 @@ export const Carousel = ({ items, offset = 10 }: CarouselProps) => {
 
   const extendedItems = [items[items.length - 1], ...items, items[0]];
 
+  const handleIndexReset = useDebounce(() => {
+    isTransitioning.current = false;
+    if (currentIndex >= items.length + 1) {
+      setCurrentIndex(1);
+    } else if (currentIndex <= 0) {
+      setCurrentIndex(items.length);
+    }
+  }, 300);
+
   useEffect(() => {
     if (isTransitioning.current) {
-      const timer = setTimeout(() => {
-        isTransitioning.current = false;
-        if (currentIndex >= items.length + 1) {
-          setCurrentIndex(1);
-        } else if (currentIndex <= 0) {
-          setCurrentIndex(items.length);
-        }
-      }, 300);
-      return () => clearTimeout(timer);
+      handleIndexReset();
     }
-  }, [currentIndex, items.length]);
+
+    return () => {
+      handleIndexReset.cancel();
+    };
+  }, [currentIndex, items.length, handleIndexReset]);
 
   const moveCarousel = (direction: number) => {
     if (!isTransitioning.current) {

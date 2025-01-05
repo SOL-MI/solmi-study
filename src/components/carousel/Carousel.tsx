@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Children, useEffect, useRef, useState } from "react";
 import { CarouselItem } from "./Item";
 import { CarouselButton } from "./Button";
 import { CarouselProvider } from "./context";
@@ -6,37 +6,52 @@ import { carouselContainerStyle } from "./carousel.css";
 import { useDebounce } from "../../hooks/useDebounce";
 
 interface CarouselProps {
-  items: React.ReactNode[];
+  items?: React.ReactNode[];
   /**
    * @description 아이템 간의 간격
    */
   offset?: number;
+  children?: React.ReactNode;
 }
-export const Carousel = ({ items, offset = 10 }: CarouselProps) => {
+export const Carousel = ({ items, offset = 10, children }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const isTransitioning = useRef(false);
   const carouselRef = useRef(null);
 
-  const extendedItems = [items[items.length - 1], ...items, items[0]];
+  const childrenArray = Children.toArray(children);
+  const extendedItems = [
+    childrenArray[childrenArray.length - 1],
+    ...childrenArray,
+    childrenArray[0],
+  ];
 
   const handleIndexReset = useDebounce(() => {
     isTransitioning.current = false;
-    if (currentIndex >= items.length + 1) {
+    if (currentIndex >= childrenArray.length + 1) {
       setCurrentIndex(1);
     } else if (currentIndex <= 0) {
-      setCurrentIndex(items.length);
+      setCurrentIndex(childrenArray.length);
     }
   }, 300);
+  // const extendedItems = [items[items.length - 1], ...items, items[0]];
+
+  // const handleIndexReset = useDebounce(() => {
+  //   isTransitioning.current = false;
+  //   if (currentIndex >= items.length + 1) {
+  //     setCurrentIndex(1);
+  //   } else if (currentIndex <= 0) {
+  //     setCurrentIndex(items.length);
+  //   }
+  // }, 300);
 
   useEffect(() => {
     if (isTransitioning.current) {
       handleIndexReset();
     }
-
     return () => {
       handleIndexReset.cancel();
     };
-  }, [currentIndex, items.length, handleIndexReset]);
+  }, [currentIndex, childrenArray.length, handleIndexReset]);
 
   const moveCarousel = (direction: number) => {
     if (!isTransitioning.current) {

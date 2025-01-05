@@ -1,20 +1,23 @@
 import { CSSProperties, HTMLAttributes } from "react";
 import { useCarouselContext } from "./context";
+import { carouselItemStyle } from "./carousel.css";
+import clsx from "clsx";
 
 export const CarouselItem = (props: HTMLAttributes<HTMLDivElement>) => {
-  const { children, style:styleFromProps, ...restProps } = props;
-  const { offset } = useCarouselContext('CarouselItem');
+  const { children, className, style: styleFromProps, ...restProps } = props;
+  const { offset } = useCarouselContext("CarouselItem");
 
-  const style:CSSProperties = {
-    height: 240,
-    borderRadius: 10,
-    backgroundColor: '#fff',
+  const style: CSSProperties = {
     margin: `0 ${offset}px`,
     ...styleFromProps,
   };
 
   return (
-    <div {...restProps} style={style}>
+    <div
+      className={clsx(carouselItemStyle, className)}
+      style={style}
+      {...restProps}
+    >
       {children}
     </div>
   );

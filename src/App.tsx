@@ -1,4 +1,5 @@
 import { Carousel } from "./components/carousel/Carousel";
+import { carouselWrapperStyle } from "./components/carousel/carousel.css";
 import { CarouselItem } from "./components/carousel/Item";
 import "./styles.css";
 
@@ -11,7 +12,7 @@ function App() {
     <CarouselItem>Item 5</CarouselItem>,
   ];
   return (
-    <div className="app-container">
+    <div className={carouselWrapperStyle}>
       <Carousel items={items} offset={20} />
     </div>
   );

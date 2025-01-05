@@ -60,9 +60,8 @@ module.exports = {
       output: path.resolve(__dirname, "src/routes/routeTree.gen.ts"), // 생성될 파일 경로
     }),
     new VanillaExtractPlugin(),
-
-    // new Dotenv({
-    //   path: `./.env.${process.env.APP_PHASE || "local"}`, // .env 파일 경로 설정
-    // }),
+    new Dotenv({
+      path: `./.env.${process.env.APP_PHASE || "local"}`, // .env 파일 경로 설정
+    }),
   ],
 };

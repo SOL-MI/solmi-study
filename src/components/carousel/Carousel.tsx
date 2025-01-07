@@ -6,14 +6,13 @@ import { carouselContainerStyle } from "./carousel.css";
 import { useDebounce } from "../../hooks/useDebounce";
 
 interface CarouselProps {
-  items?: React.ReactNode[];
   /**
    * @description 아이템 간의 간격
    */
   offset?: number;
   children?: React.ReactNode;
 }
-export const Carousel = ({ items, offset = 10, children }: CarouselProps) => {
+export const Carousel = ({ offset = 10, children }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const isTransitioning = useRef(false);
   const carouselRef = useRef(null);
@@ -33,30 +32,12 @@ export const Carousel = ({ items, offset = 10, children }: CarouselProps) => {
       setCurrentIndex(childrenArray.length);
     }
   }, 300);
-  // const extendedItems = [items[items.length - 1], ...items, items[0]];
-
-  // const handleIndexReset = useDebounce(() => {
-  //   isTransitioning.current = false;
-  //   if (currentIndex >= items.length + 1) {
-  //     setCurrentIndex(1);
-  //   } else if (currentIndex <= 0) {
-  //     setCurrentIndex(items.length);
-  //   }
-  // }, 300);
-
-  useEffect(() => {
-    if (isTransitioning.current) {
-      handleIndexReset();
-    }
-    return () => {
-      handleIndexReset.cancel();
-    };
-  }, [currentIndex, childrenArray.length, handleIndexReset]);
 
   const moveCarousel = (direction: number) => {
     if (!isTransitioning.current) {
       isTransitioning.current = true;
       setCurrentIndex((prevIndex) => prevIndex + direction);
+      handleIndexReset();
     }
   };
 

@@ -1,16 +1,15 @@
-import { Children, useEffect, useRef, useState } from "react";
+import { Children, PropsWithChildren, useRef, useState } from "react";
 import { CarouselItem } from "./Item";
 import { CarouselButton } from "./Button";
 import { CarouselProvider } from "./context";
 import { carouselContainerStyle } from "./carousel.css";
 import { useDebounce } from "../../hooks/useDebounce";
 
-interface CarouselProps {
+interface CarouselProps extends PropsWithChildren {
   /**
    * @description 아이템 간의 간격
    */
   offset?: number;
-  children?: React.ReactNode;
 }
 export const Carousel = ({ offset = 10, children }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(1);

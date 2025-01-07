@@ -24,10 +24,6 @@ declare module "@tanstack/react-router" {
   }
 }
 
-// const router = createRouter({
-//   routeTree: Route,
-// });
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

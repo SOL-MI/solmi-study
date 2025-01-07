@@ -1,9 +1,9 @@
 import { customAxios } from "../instance";
-import { GetPopularRequest } from "./home.type";
+import { GetPopularRequest, PopularResponse } from "./home.type";
 
-export const getPopular = async (req: GetPopularRequest) => {
-  const response = await customAxios.get("/movie/popular", {
-    params: req,
-  });
-  return response.data;
-};
+export const getPopular = (req: GetPopularRequest): Promise<PopularResponse> =>
+  customAxios
+    .get("/movie/popular", {
+      params: req,
+    })
+    .then((res) => res.data);

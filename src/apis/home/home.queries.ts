@@ -1,12 +1,16 @@
 import { useQuery } from "react-query";
-import { GetPopularRequest } from "./home.type";
+import { GetPopularRequest, PopularResponse } from "./home.type";
 import { getPopular } from "./home.api";
+import { CommonQueryOptions } from "../../types/query.type";
 
-export const useGetPopular = (req: GetPopularRequest) => {
-  return useQuery({
+export const usePopularQuery = (
+  req: GetPopularRequest,
+  option?: CommonQueryOptions<PopularResponse>
+) =>
+  useQuery<PopularResponse>({
     queryKey: ["popular"],
     queryFn: () => getPopular(req),
-    staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 5,
+    staleTime: option?.staleTime ?? 1000 * 60 * 60, // 1시간
+    cacheTime: option?.cacheTime ?? 1000 * 60 * 60,
+    ...option,
   });
-};

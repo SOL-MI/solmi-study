@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const { TanStackRouterWebpack } = require("@tanstack/router-plugin/webpack");
+const { VanillaExtractPlugin } = require("@vanilla-extract/webpack-plugin");
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -54,8 +56,12 @@ module.exports = {
       filename: "index.html", // 생성될 HTML 파일 이름
       inject: "body", // 스크립트를 body 태그 끝에 삽입
     }),
-    // new Dotenv({
-    //   path: `./.env.${process.env.APP_PHASE || "local"}`, // .env 파일 경로 설정
-    // }),
+    TanStackRouterWebpack({
+      output: path.resolve(__dirname, "src/routes/routeTree.gen.ts"), // 생성될 파일 경로
+    }),
+    new VanillaExtractPlugin(),
+    new Dotenv({
+      path: `./.env.${process.env.APP_PHASE || "local"}`, // .env 파일 경로 설정
+    }),
   ],
 };

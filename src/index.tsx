@@ -1,27 +1,36 @@
-import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { StrictMode } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-const rootElement = document.getElementById("root");
-const root = ReactDOM.createRoot(rootElement!);
+import { routeTree } from "./routeTree.gen";
+
+const router = createRouter({ routeTree });
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
+});
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(
   <StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </StrictMode>
 );
-
-// const arrowFunction = () => {
-//   return "Hello, Babel!";
-// };
-
-// const promiseExample = new Promise((resolve, reject) => {
-//   setTimeout(() => resolve("Promise resolved!"), 1000);
-// });
-
-// promiseExample.then(console.log);
-
-// console.log(arrowFunction());
-
-// import sum from "./sum";
-
-// console.log("Total:", sum(1, 3));

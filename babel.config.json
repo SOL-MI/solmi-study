@@ -10,7 +10,8 @@
       {
         "corejs": 3
       }
-    ]
+    ],
+    "@vanilla-extract/babel-plugin"
   ],
   "targets": {
     "chrome": "64",

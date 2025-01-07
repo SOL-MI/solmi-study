@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "start": "cross-env NODE_ENV=development APP_PHASE=local webpack serve --config webpack.dev.js",
+    "build": "cross-env NODE_ENV=production APP_PHASE=production webpack --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "type-check": "tsc -p ./tsconfig.build.json"
   },
@@ -20,9 +20,13 @@
     "@babel/preset-typescript": "^7.26.0",
     "@babel/runtime-corejs3": "^7.26.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
+    "@tanstack/router-devtools": "^1.95.0",
+    "@tanstack/router-plugin": "^1.95.0",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/webpack-env": "^1.18.5",
+    "@vanilla-extract/webpack-plugin": "^2.3.16",
     "@webpack-cli/generators": "^3.0.7",
     "babel-loader": "^9.2.1",
     "cross-env": "^7.0.3",
@@ -41,8 +45,15 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "@tanstack/react-router": "^1.95.0",
+    "@vanilla-extract/babel-plugin": "^1.2.0",
+    "@vanilla-extract/css": "^1.17.0",
+    "axios": "^1.7.9",
+    "clsx": "^2.1.1",
     "core-js": "^3.39.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-query": "^3.39.3"
   }
 }

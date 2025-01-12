@@ -3,6 +3,7 @@ import { CarouselItem } from "../components/carousel/Item";
 import { Carousel } from "../components/carousel/Carousel";
 import { usePopularQuery } from "../apis/home/home.queries";
 import { carouselImgStyle } from "../components/carousel/carousel.css";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -17,7 +18,19 @@ function Index() {
 
   return (
     <div className="app-container">
-      <Carousel offset={20}>
+      <Carousel
+        offset={20}
+        leftAffix={
+          <Carousel.Button direction="left">
+            <FaAngleLeft color="#fff" />
+          </Carousel.Button>
+        }
+        rightAffix={
+          <Carousel.Button direction="right">
+            <FaAngleRight color="#fff" />
+          </Carousel.Button>
+        }
+      >
         {popularMovieData?.results.map((movie) => (
           <CarouselItem key={movie.id}>
             <img

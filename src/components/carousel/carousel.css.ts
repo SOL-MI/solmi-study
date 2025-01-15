@@ -22,4 +22,33 @@ export const carouselItemStyle = style({
   borderRadius: 10,
   backgroundColor: "#fff",
   position: "relative",
+  flex: "0 0 100%",
+  minHeight: "200px",
+  backgroundSize: "cover",
+  objectFit: "cover",
+  overflow: "hidden",
+});
+
+export const carouselTitleStyle = style({
+  position: "absolute",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  bottom: 0,
+  left: 0,
+  color: "#fff",
+  width: "100%",
+});
+
+export const carouselOverviewStyle = style({
+  position: "absolute",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  bottom: "0",
+  top: 0,
+  left: 0,
+  right: 0,
+  color: "#fff",
+  padding: "0 20%",
 });

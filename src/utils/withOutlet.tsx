@@ -9,7 +9,8 @@ export const withOutlet = <T extends string>(
       (acc, slot) => {
         acc[slot] =
           React.Children.toArray(props.children).find(
-            (child: any) => child.type.slotName === slot
+            (child: any) =>
+              child.type && child.type.displayName === `Plugin.${slot}`
           ) || null;
         return acc;
       },

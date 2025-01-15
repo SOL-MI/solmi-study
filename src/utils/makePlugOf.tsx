@@ -31,5 +31,6 @@ export const makePlugOf = (
   );
 
   PluginComp.displayName = getPluginCompDisplayName(slotName);
+
   return PluginComp;
 };

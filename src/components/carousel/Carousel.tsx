@@ -37,7 +37,7 @@ export const Carousel = ({
   const carouselRef = useRef(null);
 
   const childrenArray = Children.toArray(children);
-  const extendedItems = [
+  const extendedItems: ReactNode[] = [
     childrenArray[childrenArray.length - 1],
     ...childrenArray,
     childrenArray[0],

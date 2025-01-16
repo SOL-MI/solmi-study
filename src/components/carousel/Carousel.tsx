@@ -1,23 +1,43 @@
-import { Children, PropsWithChildren, useRef, useState } from "react";
+import {
+  Children,
+  CSSProperties,
+  PropsWithChildren,
+  ReactNode,
+  useRef,
+  useState,
+} from "react";
 import { CarouselItem } from "./Item";
 import { CarouselButton } from "./Button";
 import { CarouselProvider } from "./context";
 import { carouselContainerStyle } from "./carousel.css";
 import { useDebounce } from "../../hooks/useDebounce";
+import clsx from "clsx";
 
 interface CarouselProps extends PropsWithChildren {
   /**
    * @description 아이템 간의 간격
    */
   offset?: number;
+  leftAffix?: ReactNode;
+  rightAffix?: ReactNode;
+  style?: CSSProperties;
+  className?: string;
 }
-export const Carousel = ({ offset = 10, children }: CarouselProps) => {
+export const Carousel = ({
+  offset = 10,
+  children,
+  leftAffix,
+  rightAffix,
+  style,
+  className,
+  ...restProps
+}: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const isTransitioning = useRef(false);
   const carouselRef = useRef(null);
 
   const childrenArray = Children.toArray(children);
-  const extendedItems = [
+  const extendedItems: ReactNode[] = [
     childrenArray[childrenArray.length - 1],
     ...childrenArray,
     childrenArray[0],
@@ -47,8 +67,13 @@ export const Carousel = ({ offset = 10, children }: CarouselProps) => {
       currentIndex={currentIndex}
       setCurrentIndex={setCurrentIndex}
       offset={offset}
+      moveCarousel={moveCarousel}
     >
-      <div className={carouselContainerStyle}>
+      <div
+        className={clsx(carouselContainerStyle, className)}
+        style={style}
+        {...restProps}
+      >
         <div
           ref={carouselRef}
           style={{
@@ -65,18 +90,8 @@ export const Carousel = ({ offset = 10, children }: CarouselProps) => {
             </div>
           ))}
         </div>
-        <CarouselButton
-          onClick={() => moveCarousel(-1)}
-          style={{ left: offset + 10 }}
-        >
-          {"<"}
-        </CarouselButton>
-        <CarouselButton
-          onClick={() => moveCarousel(1)}
-          style={{ right: offset + 10 }}
-        >
-          {">"}
-        </CarouselButton>
+        {leftAffix}
+        {rightAffix}
       </div>
     </CarouselProvider>
   );

@@ -1,8 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { CarouselItem } from "../components/carousel/Item";
 import { Carousel } from "../components/carousel/Carousel";
 import { usePopularQuery } from "../apis/home/home.queries";
-import { carouselImgStyle } from "../components/carousel/carousel.css";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -17,29 +16,38 @@ function Index() {
 
   return (
     <div className="app-container">
-      <Carousel offset={20}>
+      <Carousel
+        offset={20}
+        leftAffix={
+          <Carousel.Button direction="left">
+            <FaAngleLeft color="#fff" />
+          </Carousel.Button>
+        }
+        rightAffix={
+          <Carousel.Button direction="right">
+            <FaAngleRight color="#fff" />
+          </Carousel.Button>
+        }
+      >
         {popularMovieData?.results.map((movie) => (
-          <CarouselItem key={movie.id}>
-            <img
-              className={carouselImgStyle}
-              src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-              alt={movie.title}
-            />
-            <p
-              style={{
-                position: "absolute",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                bottom: 0,
-                left: 0,
-                color: "#fff",
-                width: "100%",
-              }}
-            >
+          <Carousel.Item
+            key={movie.id}
+            style={{
+              backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`,
+              height: "400px",
+            }}
+            alt={movie.title}
+          >
+            <Carousel.Item.Title className="custom-title">
               {movie.title}
-            </p>
-          </CarouselItem>
+            </Carousel.Item.Title>
+            <Carousel.Item.Overview className="custom-overview">
+              {movie.overview}
+            </Carousel.Item.Overview>
+            <Carousel.Item.VoteAverage className="custom-vote-average">
+              <span>평점: {movie.vote_average}</span>
+            </Carousel.Item.VoteAverage>
+          </Carousel.Item>
         ))}
       </Carousel>
     </div>

@@ -1,6 +1,11 @@
+"use client";
+
 import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { getPopular } from "./apis/home/home.api";
+import { PopularResponse } from "./apis/home/home.type";
+import { Button, Carousel } from "@repo/ui";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -18,7 +23,15 @@ const ThemeImage = (props: Props) => {
   );
 };
 
-export default function Home() {
+export default async function Home() {
+  const req = {
+    language: "ko-KR",
+    page: 1,
+    region: "KR",
+  };
+
+  const popularMovieData: PopularResponse = await getPopular(req);
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -62,6 +75,40 @@ export default function Home() {
           >
             Read our docs
           </a>
+          <Carousel
+            offset={20}
+            leftAffix={
+              <Carousel.Button direction="left">
+                <FaAngleLeft color="#fff" />
+              </Carousel.Button>
+            }
+            rightAffix={
+              <Carousel.Button direction="right">
+                <FaAngleRight color="#fff" />
+              </Carousel.Button>
+            }
+          >
+            {popularMovieData?.results.map((movie: any) => (
+              <Carousel.Item
+                key={movie.id}
+                style={{
+                  backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`,
+                  height: "400px",
+                }}
+                alt={movie.title}
+              >
+                <Carousel.Item.Title className="custom-title">
+                  {movie.title}
+                </Carousel.Item.Title>
+                <Carousel.Item.Overview className="custom-overview">
+                  {movie.overview}
+                </Carousel.Item.Overview>
+                <Carousel.Item.VoteAverage className="custom-vote-average">
+                  <span>평점: {movie.vote_average}</span>
+                </Carousel.Item.VoteAverage>
+              </Carousel.Item>
+            ))}
+          </Carousel>
         </div>
         <Button appName="web" className={styles.secondary}>
           Open alert

@@ -1,8 +1,21 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "plugins": [
+      {
+        "name": "next"
+      },
+      {
+        "name": "react-jsx"
+      },
+      { "name": "vanilla-extract" }
+    ],
+    "noEmit": false,
+    "declaration": true,
+    "moduleResolution": "node16",
+    "target": "ESNext"
   },
-  "include": ["src"],
+  "include": ["src", "utils", "hooks"],
   "exclude": ["node_modules", "dist"]
 }
